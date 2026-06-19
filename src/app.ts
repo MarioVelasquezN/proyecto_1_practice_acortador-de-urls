@@ -1,10 +1,12 @@
 import express, { type Express, type NextFunction, type Request, type Response } from "express";
+import cors from "cors";
 import { createURLsRouter } from "./modules/urls/index.js";
 import { createAuthRouter } from "./modules/auth/index.js";
 
 export function createApp(): Express {
   const app = express();
 
+  app.use(cors({ origin: "http://localhost:5173", credentials: true }));
   app.use(express.json());
 
   app.get("/health", (_req, res) => {
