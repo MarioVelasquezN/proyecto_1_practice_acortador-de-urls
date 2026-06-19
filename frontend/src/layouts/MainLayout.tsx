@@ -6,27 +6,25 @@ export function MainLayout() {
 
   return (
     <div>
-      <header style={{ display: 'flex', gap: '1rem', padding: '1rem', borderBottom: '1px solid #ccc' }}>
-        <Link to="/" style={{ fontWeight: 'bold', fontSize: '1.25rem' }}>
-          ⚡ SNAP
-        </Link>
-        <nav style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginLeft: 'auto' }}>
+      <header className="main-header">
+        <Link to="/" className="main-header-logo">⚡ SNAP</Link>
+        <nav className="main-nav">
           {isAuthenticated ? (
             <>
-              <span>Hola, {user?.name}</span>
-              <Link to="/dashboard">Dashboard</Link>
-              <button onClick={logout}>Cerrar sesión</button>
+              <span className="nav-greeting">Hola, {user?.name}</span>
+              <Link to="/dashboard" className="nav-link">Dashboard</Link>
+              <button className="nav-btn-logout" onClick={logout}>Cerrar sesión</button>
             </>
           ) : (
             <>
-              <Link to="/login">Iniciar sesión</Link>
-              <Link to="/register">Registrarse</Link>
+              <Link to="/login" className="nav-link">Iniciar sesión</Link>
+              <Link to="/register" className="nav-link">Registrarse</Link>
             </>
           )}
         </nav>
       </header>
 
-      <main style={{ padding: '2rem' }}>
+      <main>
         <Outlet />
       </main>
     </div>

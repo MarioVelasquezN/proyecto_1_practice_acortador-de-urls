@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authenticate } from "../../middleware/authenticate.js";
+import { authenticate, optionalAuthenticate } from "../../middleware/authenticate.js";
 import {
   createShortURL,
   redirectToLongURL,
@@ -11,8 +11,8 @@ import {
 export function createURLsRouter(): Router {
   const router = Router();
 
-  // Rutas públicas
-  router.get("/", listAllURLs);
+  // Público con auth opcional: si hay token válido, is_owner se calcula por URL
+  router.get("/", optionalAuthenticate, listAllURLs);
 
   // Rutas protegidas — /dashboard debe ir antes de /:code para evitar match como código
   router.get("/dashboard", authenticate, getDashboard);

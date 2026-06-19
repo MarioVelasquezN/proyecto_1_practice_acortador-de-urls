@@ -11,11 +11,19 @@ export interface CreateURLRequest {
   long_url: string;
 }
 
-export interface URLResponse {
+// Campos base compartidos entre endpoints (sin datos de sesión).
+// Usado por GET /u/dashboard donde la propiedad es siempre implícita.
+export interface URLPublicResponse {
   code: string;
   long_url: string;
   created_at: string;
   visits: number;
+}
+
+// Respuesta enriquecida que incluye contexto de sesión.
+// Usado por GET /u y POST /u.
+export interface URLResponse extends URLPublicResponse {
+  is_owner: boolean;
 }
 
 export interface DashboardSummary {
@@ -36,7 +44,7 @@ export interface DailyClicks {
 
 export interface DashboardResponse {
   summary: DashboardSummary;
-  best_url: URLResponse | null;
+  best_url: URLPublicResponse | null;
   urls_created_by_day: DailyCount[];
   clicks_by_day: DailyClicks[];
   period_days: number;

@@ -48,6 +48,7 @@ export function createShortURL(req: Request, res: Response): void {
       long_url: url.long_url,
       created_at: url.created_at,
       visits: url.visits,
+      is_owner: true,
     };
 
     res.status(201).json(response);
@@ -72,14 +73,17 @@ export function redirectToLongURL(req: Request, res: Response): void {
   }
 }
 
-export function listAllURLs(_req: Request, res: Response): void {
+export function listAllURLs(req: Request, res: Response): void {
   try {
     const urls = getAllURLs();
+    const userId = req.user?.id ?? null;
+
     const response: URLResponse[] = urls.map((url) => ({
       code: url.code,
       long_url: url.long_url,
       created_at: url.created_at,
       visits: url.visits,
+      is_owner: userId !== null && url.user_id === userId,
     }));
 
     res.status(200).json(response);
